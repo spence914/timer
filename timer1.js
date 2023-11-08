@@ -1,5 +1,4 @@
-const times = process.argv.slice(2);
-const sortedTimes = times.sort((a, b) => a - b);
+const sortedTimes = process.argv.slice(2).sort((a, b) => a - b);
 
 for (let time of sortedTimes) {
   if (time < 0 || isNaN(time)) {
