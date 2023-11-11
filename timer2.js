@@ -3,24 +3,23 @@
 const readline = require('readline');
 
 const goBeep = () => {
-  process.stdout.write('\x07');
+  process.stdout.write('\x07'); //function to produce a beep from the CLI
 };
 
 const setTimer = (seconds) => {
-  console.log(`Setting timer for ${seconds} seconds...`);
+  console.log(`Setting timer for ${seconds} seconds...`); // Timer function logs length of timer in seconds, then begins it, runs goBeep when finished.
   setTimeout(goBeep, 1000 * seconds);
 };
 
 const numKeys = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
-readline.emitKeypressEvents(process.stdin);
+readline.emitKeypressEvents(process.stdin); // Tells program to listen for keypress events
 
-if (process.stdin.isTTY) {
-  process.stdin.setRawMode(true);
-}
+process.stdin.setRawMode(true); // RawMode causes program to read stdin character by character, not line by line or waiting for 'enter' to be pressed
 
-process.stdin.on('keypress', (str, key) => {
-  if (key.name === 'b') {
+
+process.stdin.on('keypress', (str, key) => { // on method is an eventListener, with keypress being the named event, 'str' being the string produced by the keypress, and key being an object with more info about the key (including name)
+  if (str === 'b') {
     goBeep();
   }
 
@@ -29,8 +28,8 @@ process.stdin.on('keypress', (str, key) => {
     process.exit();
   }
 
-  if (numKeys.includes(key.name)) {
-    setTimer(key.name);
+  if (numKeys.includes(str)) {
+    setTimer(str);
   }
 });
 
